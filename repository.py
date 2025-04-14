@@ -27,9 +27,6 @@ def get_data_stock_market():
     return data_stock_market[config["initialisation"]["field_to_keep"]]
 
 #telechargement données des entreprises
-
-
-
 def get_company_financials_dfs(ticker: str):
     config: Dict = get_config()
     start_date = config["initialisation"]["begin_date"]
