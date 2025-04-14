@@ -3,10 +3,6 @@ ticker1 = "ENGI.PA"
 ticker2= "VIE.PA"
 ticker3 = "^FCHI"
 
-[analyse]
-ticker1 = "ENGI.PA"
-ticker2= "VIE.PA"
-
 [initialisation]
 field_to_keep = "Close"
 begin_date = "2022-01-01"
