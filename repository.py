@@ -1,6 +1,8 @@
 import os
 from typing import Dict
 
+import pandas as pd
+
 import numpy as np
 import yfinance as yf
 
@@ -23,3 +25,28 @@ def get_data_stock_market():
         end=config["initialisation"]["end_date"],
     )
     return data_stock_market[config["initialisation"]["field_to_keep"]]
+
+#telechargement données des entreprises
+
+
+
+def get_company_financials_dfs(ticker: str):
+    config: Dict = get_config()
+    start_date = config["initialisation"]["begin_date"]
+    end_date = config["initialisation"]["end_date"]
+    company = yf.Ticker(ticker)
+    info_df = pd.DataFrame([company.info]).T
+    income_stmt_df = company.income_stmt
+    balance_sheet_df = company.balance_sheet
+    cashflow_df = company.cashflow
+
+    def filter_by_date(df):
+        return df.loc[:, (df.columns >= pd.to_datetime(start_date)) & (df.columns <= pd.to_datetime(end_date))]
+
+    income_stmt_df = filter_by_date(income_stmt_df)
+    balance_sheet_df = filter_by_date(balance_sheet_df)
+    cashflow_df = filter_by_date(cashflow_df)
+
+    return income_stmt_df, balance_sheet_df, cashflow_df
+
+
