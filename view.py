@@ -1,4 +1,5 @@
 from typing import Dict
+
 import matplotlib
 
 import numpy as np
@@ -6,6 +7,7 @@ import pandas as pd
 
 from matplotlib import pyplot as plt
 from repository import get_config
+from repository import get_company_financials_dfs
 
 #graphique cours des actions
 def display_chart_stock_market(data):
@@ -46,3 +48,27 @@ def display_chart_stock_market(data):
 
     plt.legend()
     plt.show()
+
+def display_data_company1():
+    config: Dict = get_config()
+    income_stmt_df, balance_sheet_df, cashflow_df = get_company_financials_dfs(config["portfolio"]["ticker1"])
+    print("=== INCOME STATEMENT ===")
+    print(income_stmt_df)
+
+    print("=== BALANCE SHEET ===")
+    print(balance_sheet_df)
+
+    print("=== CASH FLOW ===")
+    print(cashflow_df)
+
+def display_data_company2():
+    config: Dict = get_config()
+    income_stmt_df, balance_sheet_df, cashflow_df = get_company_financials_dfs(config["portfolio"]["ticker2"])
+    print("=== INCOME STATEMENT ===")
+    print(income_stmt_df)
+
+    print("=== BALANCE SHEET ===")
+    print(balance_sheet_df)
+
+    print("=== CASH FLOW ===")
+    print(cashflow_df)
