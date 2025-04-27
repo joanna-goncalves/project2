@@ -3,11 +3,10 @@ from typing import Dict
 
 import pandas as pd
 
-import numpy as np
 import yfinance as yf
 
 from constants import CONFIG_FILE
-from helpers_serialize import get_serialized_data
+from helpers.helpers_serialize import get_serialized_data
 
 def get_config() -> Dict:
     path: str = os.path.join(os.getcwd(), CONFIG_FILE)
