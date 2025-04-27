@@ -67,26 +67,21 @@ def display_data_company2():
 def display_ebitda_chart(income_stmt_df1, income_stmt_df2):
     config: Dict = get_config()
 
-    # Transposer et réinitialiser l'index
     income_stmt_df1 = income_stmt_df1.transpose().reset_index()
     income_stmt_df2 = income_stmt_df2.transpose().reset_index()
 
-    # Assurer que la colonne "Date" (config["chart_ebitda"]["x"]) existe dans les DataFrames
     income_stmt_df1[config["chart_ebitda"]["x"]] = pd.to_datetime(income_stmt_df1['index']).dt.year
     income_stmt_df2[config["chart_ebitda"]["x"]] = pd.to_datetime(income_stmt_df2['index']).dt.year
 
     income_stmt_df1[config["chart_ebitda"]["y"]] = income_stmt_df1[config["chart_ebitda"]["y"]] / 1000000000
     income_stmt_df2[config["chart_ebitda"]["y"]] = income_stmt_df2[config["chart_ebitda"]["y"]] / 1000000000
 
-    # Sélectionner uniquement les colonnes nécessaires : 'x' (année) et 'y' (EBITDA)
     income_stmt_df1 = income_stmt_df1[[config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]]
     income_stmt_df2 = income_stmt_df2[[config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]]
 
-    # Renommer les colonnes
     income_stmt_df1.columns = [config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]
     income_stmt_df2.columns = [config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]
 
-    # Tracer le graphique
     fig, ax = plt.subplots(figsize=(10, 6))
 
     sns.lineplot(
@@ -105,11 +100,9 @@ def display_ebitda_chart(income_stmt_df1, income_stmt_df2):
         label=config["portfolio"]["ticker2"]
     )
 
-    # Personnalisation des axes et du titre
     ax.set_xlabel(config["chart_ebitda"]["label1"])
     ax.set_ylabel(config["chart_ebitda"]["label2"])
     ax.set_title(config["chart_ebitda"]["title"])
 
-    # Afficher la légende et le graphique
     plt.legend()
     plt.show()
