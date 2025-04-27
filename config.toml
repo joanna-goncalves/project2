@@ -5,7 +5,7 @@ ticker3 = "^FCHI"
 
 [initialisation]
 field_to_keep = "Close"
-begin_date = "2022-01-01"
+begin_date = "2020-01-01"
 end_date = "2024-12-31"
 
 [chart]
@@ -22,3 +22,10 @@ legend_loc1 = "upper left"
 legend_loc2 = "upper right"
 rotation = 90
 
+[chart_ebitda]
+x = "Date"
+y = "EBITDA"
+marker = "o"
+label1 = "Year"
+label2 = "EBITDA"
+title = "Evolution de l'EBITDA"

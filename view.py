@@ -5,6 +5,8 @@ import matplotlib
 import numpy as np
 import pandas as pd
 
+import seaborn as sns
+
 from matplotlib import pyplot as plt
 from repository import get_config
 from repository import get_company_financials_dfs
@@ -49,26 +51,65 @@ def display_chart_stock_market(data):
     plt.legend()
     plt.show()
 
+#montrer les données financières des deux entreprises
 def display_data_company1():
     config: Dict = get_config()
-    income_stmt_df, balance_sheet_df, cashflow_df = get_company_financials_dfs(config["portfolio"]["ticker1"])
-    print("=== INCOME STATEMENT ===")
-    print(income_stmt_df)
-
-    print("=== BALANCE SHEET ===")
-    print(balance_sheet_df)
-
-    print("=== CASH FLOW ===")
-    print(cashflow_df)
+    income_stmt_df1, balance_sheet_df1, cashflow_df1 = get_company_financials_dfs(config["portfolio"]["ticker1"])
+    return income_stmt_df1, balance_sheet_df1, cashflow_df1
 
 def display_data_company2():
     config: Dict = get_config()
-    income_stmt_df, balance_sheet_df, cashflow_df = get_company_financials_dfs(config["portfolio"]["ticker2"])
-    print("=== INCOME STATEMENT ===")
-    print(income_stmt_df)
+    income_stmt_df2, balance_sheet_df2, cashflow_df2 = get_company_financials_dfs(config["portfolio"]["ticker2"])
+    return income_stmt_df2, balance_sheet_df2, cashflow_df2
 
-    print("=== BALANCE SHEET ===")
-    print(balance_sheet_df)
 
-    print("=== CASH FLOW ===")
-    print(cashflow_df)
+#graphique de comparaison de l'évolution de l'EBITDA des deux entreprises
+def display_ebitda_chart(income_stmt_df1, income_stmt_df2):
+    config: Dict = get_config()
+
+    # Transposer et réinitialiser l'index
+    income_stmt_df1 = income_stmt_df1.transpose().reset_index()
+    income_stmt_df2 = income_stmt_df2.transpose().reset_index()
+
+    # Assurer que la colonne "Date" (config["chart_ebitda"]["x"]) existe dans les DataFrames
+    income_stmt_df1[config["chart_ebitda"]["x"]] = pd.to_datetime(income_stmt_df1['index']).dt.year
+    income_stmt_df2[config["chart_ebitda"]["x"]] = pd.to_datetime(income_stmt_df2['index']).dt.year
+
+    income_stmt_df1[config["chart_ebitda"]["y"]] = income_stmt_df1[config["chart_ebitda"]["y"]] / 1000000000
+    income_stmt_df2[config["chart_ebitda"]["y"]] = income_stmt_df2[config["chart_ebitda"]["y"]] / 1000000000
+
+    # Sélectionner uniquement les colonnes nécessaires : 'x' (année) et 'y' (EBITDA)
+    income_stmt_df1 = income_stmt_df1[[config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]]
+    income_stmt_df2 = income_stmt_df2[[config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]]
+
+    # Renommer les colonnes
+    income_stmt_df1.columns = [config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]
+    income_stmt_df2.columns = [config["chart_ebitda"]["x"], config["chart_ebitda"]["y"]]
+
+    # Tracer le graphique
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    sns.lineplot(
+        ax=ax,
+        x=income_stmt_df1[config["chart_ebitda"]["x"]],
+        y=income_stmt_df1[config["chart_ebitda"]["y"]],
+        marker=config["chart_ebitda"]["marker"],
+        label=config["portfolio"]["ticker1"]
+    )
+
+    sns.lineplot(
+        ax=ax,
+        x=income_stmt_df2[config["chart_ebitda"]["x"]],
+        y=income_stmt_df2[config["chart_ebitda"]["y"]],
+        marker=config["chart_ebitda"]["marker"],
+        label=config["portfolio"]["ticker2"]
+    )
+
+    # Personnalisation des axes et du titre
+    ax.set_xlabel(config["chart_ebitda"]["label1"])
+    ax.set_ylabel(config["chart_ebitda"]["label2"])
+    ax.set_title(config["chart_ebitda"]["title"])
+
+    # Afficher la légende et le graphique
+    plt.legend()
+    plt.show()
