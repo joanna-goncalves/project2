@@ -35,4 +35,9 @@ column1 = "Date"
 column2 = "Total Debt"
 column3 = "Cash And Cash Equivalents"
 
+[leverage]
+column1 = "Date"
+column2 = "Total Debt"
+column3 = "EBITDA"
+
 
