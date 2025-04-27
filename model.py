@@ -19,7 +19,7 @@ def net_debt(balance_sheet1, balance_sheet2):
     balance_sheet1 = balance_sheet1[[config["net_debt"]["column1"], config["net_debt"]["column2"], config["net_debt"]["column3"]]]
     balance_sheet2 = balance_sheet2[[config["net_debt"]["column1"], config["net_debt"]["column2"], config["net_debt"]["column3"]]]
 
-    net_debt_company1 = balance_sheet1[config["net_debt"]["column2"]] - balance_sheet1[config["net_debt"]["column3"]]
-    net_debt_company2 = balance_sheet2[config["net_debt"]["column2"]] - balance_sheet2[config["net_debt"]["column3"]]
+    net_debt1 = balance_sheet1[config["net_debt"]["column2"]] - balance_sheet1[config["net_debt"]["column3"]]
+    net_debt2 = balance_sheet2[config["net_debt"]["column2"]] - balance_sheet2[config["net_debt"]["column3"]]
 
-    return net_debt_company1, net_debt_company2
+    return net_debt1, net_debt2
