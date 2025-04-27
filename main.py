@@ -1,8 +1,11 @@
+from model import net_debt
 from repository import get_data_stock_market, get_company_financials_dfs
 
 from constants import CONFIG_FILE
 
 from view import display_chart_stock_market, display_data_company1, display_data_company2, display_ebitda_chart
+
+from model import net_debt
 
 data_stocks = get_data_stock_market()
 print(data_stocks)
@@ -16,3 +19,7 @@ income_stmt_df2, _, _ = display_data_company2()
 
 display_ebitda_chart(income_stmt_df1, income_stmt_df2)
 
+_, balance_sheet1, _ = display_data_company1()
+_, balance_sheet2, _ = display_data_company2()
+
+print(net_debt(balance_sheet1, balance_sheet2))

@@ -29,3 +29,8 @@ marker = "o"
 label1 = "Year"
 label2 = "EBITDA"
 title = "Evolution de l'EBITDA"
+
+[net_debt]
+column1 = "Date"
+column2 = "Total Debt"
+column3 = "Cash And Cash Equivalents"
