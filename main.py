@@ -5,7 +5,7 @@ from constants import CONFIG_FILE
 
 from view import display_chart_stock_market, display_data_company1, display_data_company2, display_ebitda_chart
 
-from model import net_debt, leverage
+from model import net_debt, leverage, other_financial_ratios
 
 data_stocks = get_data_stock_market()
 print(data_stocks)
@@ -24,4 +24,6 @@ _, balance_sheet2, _ = display_data_company2()
 
 print(net_debt(balance_sheet1, balance_sheet2))
 
-print(leverage(income_stmt_df1, income_stmt_df2, balance_sheet1, balance_sheet2))
+print(leverage(income_stmt_df1, balance_sheet1))
+
+print(other_financial_ratios(income_stmt_df1, balance_sheet1))

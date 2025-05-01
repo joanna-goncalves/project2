@@ -40,4 +40,25 @@ column1 = "Date"
 column2 = "Total Debt"
 column3 = "EBITDA"
 
+[other_financial_ratios]
+column1="Date"
+
+[current_ratio]
+column1 = "Current Assets"
+column2= "Current Liabilities"
+
+[debt_to_assets]
+column1= "Total Debt"
+column2= "Total Assets"
+
+[interest_coverage]
+column1="EBIT"
+column2="Interest Expense"
+
+[ROE_ROA]
+column1="Net Income"
+column2="Stockholders Equity"
+column3="Total Assets"
+
+
 
