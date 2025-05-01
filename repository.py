@@ -12,8 +12,6 @@ def get_config() -> Dict:
     path: str = os.path.join(os.getcwd(), CONFIG_FILE)
     return get_serialized_data(path)
 
-
-
 #téléchargement data du cours des actions
 def get_data_stock_market():
     config: Dict = get_config()
