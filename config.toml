@@ -60,5 +60,13 @@ column1="Net Income"
 column2="Stockholders Equity"
 column3="Total Assets"
 
+[scenarios]
+pessimiste = -0.11
+moderate = -0.03
+optimiste = 0.02
+
+[forecast]
+row = "Total Revenue"
+
 
 

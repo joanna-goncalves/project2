@@ -3,6 +3,7 @@ import pandas as pd
 
 from typing import Dict
 from repository import get_config
+
 from repository import get_company_financials_dfs
 
 #calcul dette nette
@@ -57,3 +58,28 @@ def other_financial_ratios(income_stmt:pd.DataFrame, balance_sheet:pd.DataFrame)
     financial_ratios["ROA"] = income_stmt[config["ROE_ROA"]["column1"]] / balance_sheet[config["ROE_ROA"]["column3"]]
 
     return financial_ratios
+
+#fonction forecast sur le chiffre d'affaires
+def forecast_total_revenue(income_stmt):
+    config: Dict = get_config()
+    revenue_series = income_stmt.loc[config["forecast"]["row"]]
+    last_year_revenue = revenue_series.iloc[0]
+
+    last_col = income_stmt.columns[0]
+
+    if isinstance(last_col, pd.Timestamp):
+        next_year_revenue = str(last_col.year + 1)
+    else:
+        next_year_revenue = str(int(last_col) + 1)
+
+    scenarios = {
+        "Péssimiste":last_year_revenue*(1+config["scenarios"]["pessimiste"]),
+        "Modéré":last_year_revenue*(1+config["scenarios"]["moderate"]),
+        "Optimiste": last_year_revenue * (1 + config["scenarios"]["optimiste"])
+    }
+
+    forecasts = pd.DataFrame({
+        next_year_revenue: scenarios
+    })
+
+    return forecasts

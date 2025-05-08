@@ -8,6 +8,8 @@ import yfinance as yf
 from constants import CONFIG_FILE
 from helpers.helpers_serialize import get_serialized_data
 
+from curl_cffi import requests
+
 def get_config() -> Dict:
     path: str = os.path.join(os.getcwd(), CONFIG_FILE)
     return get_serialized_data(path)
@@ -16,10 +18,12 @@ def get_config() -> Dict:
 def get_data_stock_market():
     config: Dict = get_config()
     tickers = list(config["portfolio"].values())
+    session = requests.Session(impersonate="chrome")
     data_stock_market = yf.download(
         tickers,
         start=config["initialisation"]["begin_date"],
         end=config["initialisation"]["end_date"],
+        session = session
     )
     return data_stock_market[config["initialisation"]["field_to_keep"]]
 
@@ -28,7 +32,8 @@ def get_company_financials_dfs(ticker: str):
     config: Dict = get_config()
     start_date = config["initialisation"]["begin_date"]
     end_date = config["initialisation"]["end_date"]
-    company = yf.Ticker(ticker)
+    session = requests.Session(impersonate="chrome")
+    company = yf.Ticker(ticker,session=session)
     info_df = pd.DataFrame([company.info]).T
     income_stmt_df = company.income_stmt
     balance_sheet_df = company.balance_sheet

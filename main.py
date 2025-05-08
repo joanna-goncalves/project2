@@ -1,10 +1,11 @@
 from model import net_debt
 from repository import get_data_stock_market, get_company_financials_dfs
+
 from constants import CONFIG_FILE
 
 from view import display_chart_stock_market, display_data_company1, display_data_company2, display_ebitda_chart
 
-from model import net_debt, leverage, other_financial_ratios
+from model import net_debt, leverage, other_financial_ratios, forecast_total_revenue
 
 data_stocks = get_data_stock_market()
 print(data_stocks)
@@ -26,3 +27,6 @@ print(net_debt(balance_sheet1, balance_sheet2))
 print(leverage(income_stmt_df1, balance_sheet1))
 
 print(other_financial_ratios(income_stmt_df1, balance_sheet1))
+
+print(forecast_total_revenue(income_stmt_df1))
+print(forecast_total_revenue(income_stmt_df2))
