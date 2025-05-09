@@ -26,6 +26,7 @@ print(net_debt(balance_sheet1, balance_sheet2))
 print(leverage(income_stmt_df1, balance_sheet1))
 
 print(other_financial_ratios(income_stmt_df1, balance_sheet1))
+print(other_financial_ratios(income_stmt_df2, balance_sheet2))
 
 print(forecast_total_revenue(income_stmt_df1))
 print(forecast_total_revenue(income_stmt_df2))
